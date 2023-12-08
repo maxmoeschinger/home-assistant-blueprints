@@ -1,0 +1,5 @@
+family:
+  name: family
+  entities:
+    - person.max_moeschinger
+    - person.stine_nordli
