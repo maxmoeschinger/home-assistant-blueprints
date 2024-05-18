@@ -1,5 +1,5 @@
 blueprint:
-  name: Z2M - Namron 4 veis
+  name: Z2M - Namron 4 channel
   description: Controls switch on namron
   domain: automation
   input:
