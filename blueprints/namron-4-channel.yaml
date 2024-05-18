@@ -1,0 +1,220 @@
+blueprint:
+  name: Z2M - Namron 4 veis
+  description: Controls switch on namron
+  domain: automation
+  input:
+    switch:
+      name: Namron switch
+      description: Namron switch to use
+      selector:
+        entity:
+          domain: sensor
+    button_1_on:
+      name: Button 1 - on click
+      description: Action to run on click of button 1
+      default: []
+      selector:
+        action: {}
+    button_1_off:
+      name: Button 1 - off click
+      description: Action to run off click of button 1
+      default: []
+      selector:
+        action: {}
+    button_1_brightness_up:
+      name: Button 1 - brightness up
+      description: Action to increase brightness of button 1
+      default: []
+      selector:
+        action: {}
+    button_1_brightness_down:
+      name: Button 1 - brightness down
+      description: Action to decrease brightness of button 1
+      default: []
+      selector:
+        action: {}
+    button_2_on:
+      name: Button 2 - on click
+      description: Action to run on click of button 2
+      default: []
+      selector:
+        action: {}
+    button_2_off:
+      name: Button 2 - off click
+      description: Action to run off click of button 2
+      default: []
+      selector:
+        action: {}
+    button_2_brightness_up:
+      name: Button 2 - brightness up
+      description: Action to increase brightness of button 2
+      default: []
+      selector:
+        action: {}
+    button_2_brightness_down:
+      name: Button 2 - brightness down
+      description: Action to decrease brightness of button 2
+      default: []
+      selector:
+        action: {}
+    button_3_on:
+      name: Button 3 - on click
+      description: Action to run on click of button 3
+      default: []
+      selector:
+        action: {}
+    button_3_off:
+      name: Button 3 - off click
+      description: Action to run off click of button 3
+      default: []
+      selector:
+        action: {}
+    button_3_brightness_up:
+      name: Button 3 - brightness up
+      description: Action to increase brightness of button 3
+      default: []
+      selector:
+        action: {}
+    button_3_brightness_down:
+      name: Button 3 - brightness down
+      description: Action to decrease brightness of button 3
+      default: []
+      selector:
+        action: {}
+    button_4_on:
+      name: Button 4 - on click
+      description: Action to run on click of button 4
+      default: []
+      selector:
+        action: {}
+    button_4_off:
+      name: Button 4 - off click
+      description: Action to run off click of button 4
+      default: []
+      selector:
+        action: {}
+    button_4_brightness_up:
+      name: Button 4 - brightness up
+      description: Action to increase brightness of button 4
+      default: []
+      selector:
+        action: {}
+    button_4_brightness_down:
+      name: Button 4 - brightness down
+      description: Action to decrease brightness of button 4
+      default: []
+      selector:
+        action: {}
+mode: restart
+max_exceeded: silent
+trigger:
+  - platform: state
+    entity_id: !input "switch"
+condition:
+  - condition: and
+    conditions:
+      - >-
+        {{ trigger.to_state.state not in ["", "None"] }}
+action:
+  - variables:
+      command: "{{ trigger.to_state.state }}"
+  - choose:
+      - conditions:
+          - "{{ command == 'on_l1' }}"
+        sequence: !input "button_1_on"
+      - conditions:
+          - "{{ command == 'off_l1' }}"
+        sequence: !input "button_1_off"
+      - conditions:
+          - "{{ command == 'brightness_move_up_l1' }}"
+        sequence:
+          - repeat:
+              sequence: !input "button_1_brightness_up"
+              until:
+                - condition: state
+                  entity_id: !input "switch"
+                  state: brightness_stop_l1
+      - conditions:
+          - "{{ command == 'brightness_move_down_l1' }}"
+        sequence:
+          - repeat:
+              sequence: !input "button_1_brightness_down"
+              until:
+                - condition: state
+                  entity_id: !input "switch"
+                  state: brightness_stop_l1
+
+      - conditions:
+          - "{{ command == 'on_l2' }}"
+        sequence: !input "button_2_on"
+      - conditions:
+          - "{{ command == 'off_l2' }}"
+        sequence: !input "button_2_off"
+      - conditions:
+          - "{{ command == 'brightness_move_up_l2' }}"
+        sequence:
+          - repeat:
+              sequence: !input "button_2_brightness_up"
+              until:
+                - condition: state
+                  entity_id: !input "switch"
+                  state: brightness_stop_l2
+      - conditions:
+          - "{{ command == 'brightness_move_down_l2' }}"
+        sequence:
+          - repeat:
+              sequence: !input "button_2_brightness_down"
+              until:
+                - condition: state
+                  entity_id: !input "switch"
+                  state: brightness_stop_l2
+
+      - conditions:
+          - "{{ command == 'on_l3' }}"
+        sequence: !input "button_3_on"
+      - conditions:
+          - "{{ command == 'off_l3' }}"
+        sequence: !input "button_3_off"
+      - conditions:
+          - "{{ command == 'brightness_move_up_l3' }}"
+        sequence:
+          - repeat:
+              sequence: !input "button_3_brightness_up"
+              until:
+                - condition: state
+                  entity_id: !input "switch"
+                  state: brightness_stop_l3
+      - conditions:
+          - "{{ command == 'brightness_move_down_l3' }}"
+        sequence:
+          - repeat:
+              sequence: !input "button_3_brightness_down"
+              until:
+                - condition: state
+                  entity_id: !input "switch"
+                  state: brightness_stop_l3
+
+      - conditions:
+          - "{{ command == 'on_l4' }}"
+        sequence: !input "button_4_on"
+      - conditions:
+          - "{{ command == 'off_l4' }}"
+        sequence: !input "button_4_off"
+      - conditions:
+          - "{{ command == 'brightness_move_up_l4' }}"
+        sequence:
+          - repeat:
+              sequence: !input "button_4_brightness_up"
+              until:
+                - condition: state
+                  entity_id: !input "switch"
+                  state: brightness_stop_l4
+      - conditions:
+          - "{{ command == 'brightness_move_down_l4' }}"
+        sequence:
+          - repeat:
+              sequence: !input "button_4_brightness_down"
+              until:
+                - condition: state
+                  entity_id: !input "switch"
+                  state: brightness_stop_l4
